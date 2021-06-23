@@ -2,6 +2,8 @@
 /* example1.cpp : illustrates the use of libtricubic        */
 /* Francois Lekien <lekien@mit.edu> 2004-01-20              */
 /************************************************************/
+#include <stdlib.h>
+#include <stdio.h>
 
 ///Required Include File: tricubic.h
 ///If tricubic.h has not been installed in a directory
@@ -12,9 +14,9 @@
 ///Tricubic is written for cubes of side 1. Multiplications and
 ///  divisions are needed along the way for rectangular box with
 ///  arbitrary sides. See below for details.
-#define dx 0.2
-#define dy 2.0
-#define dz 0.3
+#define dx 1.0
+#define dy 1.0
+#define dz 1.0
 
 ///These are the 8 functions that need to be known at the 8 corners.
 ///The functions are f, the three first derivatives dfdx, dfdy, dfdz,
@@ -32,14 +34,14 @@
 ///  7: x=1; y=1; z=1;
 ///For convenience, the ordering of the points is available at run time
 ///   using tricubic_pointID2xyz(). See man page for details
-double fval[8]={1.2, 2.3, 3.4, 4.5, 5.6, 6.7, 7.8, 8.9};
-double dfdxval[8]={1.2, 2.3, 3.4, 4.5, 5.6, 6.7, 7.8, 8.9};
-double dfdyval[8]={1.2, 2.3, 3.4, 4.5, 5.6, 6.7, 7.8, 8.9};
-double dfdzval[8]={1.2, 2.3, 3.4, 4.5, 5.6, 6.7, 7.8, 8.9};
-double d2fdxdyval[8]={1.2, 2.3, 3.4, 4.5, 5.6, 6.7, 7.8, 8.9};
-double d2fdxdzval[8]={1.2, 2.3, 3.4, 4.5, 5.6, 6.7, 7.8, 8.9};
-double d2fdydzval[8]={1.2, 2.3, 3.4, 4.5, 5.6, 6.7, 7.8, 8.9};
-double d3fdxdydzval[8]={1.2, 2.3, 3.4, 4.5, 5.6, 6.7, 7.8, 8.9};
+double fval[8]={0., 1., 2., 3., 3., 4., 5., 6.};
+double dfdxval[8]={1,1,1,1,1,1,1,1};
+double dfdyval[8]={2,2,2,2,2,2,2,2};
+double dfdzval[8]={3,3,3,3,3,3,3,3};
+double d2fdxdyval[8]={0,0,0,0,0,0,0,0};
+double d2fdxdzval[8]={0,0,0,0,0,0,0,0};
+double d2fdydzval[8]={0,0,0,0,0,0,0,0};
+double d3fdxdydzval[8]={0,0,0,0,0,0,0,0};
 
 int main(int narg, char *arg[]) {
   double a[64];
@@ -66,10 +68,16 @@ int main(int narg, char *arg[]) {
   ///To get the value in the middle of the cube, we always use (.5,.5,.5)
   ///  i.e. relative coordinates
   f1=tricubic_eval(a,.5,.5,.5);
+  printf("f1 %lg\n", f1);
   ///To get the value at a point x,y,z (with referrence to corner ID 0
   ///  we devide by each length
-  f2=tricubic_eval(a,x/dx,y/dy,z/dz);
+  //f2=tricubic_eval(a,x/dx,y/dy,z/dz);
+
   ///Derivatives can be computed similarly but need to be scaled by dx,dy,dz
+  x=0.5;
+  y=0.5;
+  z=0.5;
   dfdx=tricubic_eval(a,x/dx,y/dy,z/dz,1,0,0)/dx;
-  d2fdxdy=tricubic_eval(a,x/dx,y/dy,z/dz,1,1,0)/(dx*dy);
+  printf("dfdx %lg\n", dfdx);
+  //d2fdxdy=tricubic_eval(a,x/dx,y/dy,z/dz,1,1,0)/(dx*dy);
 }

@@ -1,3 +1,5 @@
+#include <stdlib.h>
+#include <stdio.h>
 #include <math.h>
 #include "tricubic.h"
 #include "ltricubic_utils.h"
@@ -26,8 +28,11 @@ void tricubic_get_coeff_stacked(double a[64], double x[64]) {
   for (i=0;i<64;i++) {
     a[i]=(double)(0.0);
     for (j=0;j<64;j++) {
+      //printf("A[%d][%d] = %d\n",i,j, A[i][j]);
+      if(i==0) printf("rhs[%d] = %lg\n",j , x[j]);
       a[i]+=A[i][j]*x[j];
     }
+    printf("AAA: alpha[i=%d] = %lg\n", i, a[i]);
   }
 }
 
